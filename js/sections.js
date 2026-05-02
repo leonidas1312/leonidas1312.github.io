@@ -93,8 +93,7 @@ const ExperiencePage = ({
     "data-screen-label": "Experience"
   }, /*#__PURE__*/React.createElement(PageHeader, {
     kicker: "\xA7 EXPERIENCE",
-    title: /*#__PURE__*/React.createElement("span", null, "A ", /*#__PURE__*/React.createElement("em", null, "timeline"), " of building & researching."),
-    sub: "Five years across academia, deep-tech startups and EU-funded R&D."
+    title: /*#__PURE__*/React.createElement("span", null, "A ", /*#__PURE__*/React.createElement("em", null, "timeline"), " of building & researching.")
   }), /*#__PURE__*/React.createElement("div", {
     className: "xp-list"
   }, data.experience.map((x, i) => {
