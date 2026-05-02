@@ -12,7 +12,7 @@ const PORTFOLIO = {
   github: "leonidas1312",
   linkedin: "https://www.linkedin.com/in/ioannis-d-leonidas-712bba275/",
   linkedinHandle: "ioannis-d-leonidas",
-  about: "Quantum scientist and engineer. I design hybrid quantum–classical algorithms for real-world optimization, scheduling and routing problems — and ship them as deployable software. My work sits at the intersection of variational quantum algorithms, reinforcement learning and applied optimization.",
+  about: "Quantum scientist and engineer. My interests span quantum computing and quantum hardware (the kind I'd love access to), AI at scale (and the GPUs to match), and applied optimization where the math actually meets business logic. I work where these meet — turning research-grade algorithms into deployable software.",
   now: ["Leading Quantum–AI development at K3Y Labs under Horizon Europe.", "Building Qubots — an open framework for collaborative optimization research.", "Exploring qubit-efficient methods for industrial routing and scheduling."],
   experience: [{
     year: "2025 —",
