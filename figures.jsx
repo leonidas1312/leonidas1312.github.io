@@ -38,9 +38,6 @@ const QubotsFigure = () => (
         <rect width="80" height="60" fill="none" stroke="var(--accent)" strokeWidth="1"/>
         <text x="40" y="22" textAnchor="middle" opacity="0.55" fontSize="8">RUNTIME</text>
         <text x="40" y="40" textAnchor="middle" fill="var(--accent)" fontSize="10">.optimize()</text>
-        <circle cx="40" cy="50" r="2" fill="var(--accent)">
-          <animate attributeName="opacity" values="0.3;1;0.3" dur="1.6s" repeatCount="indefinite"/>
-        </circle>
       </g>
       {/* result */}
       <g transform="translate(310,150)">
@@ -240,10 +237,6 @@ const RastionFigure = () => (
         <ellipse cx="50" cy="14" rx="50" ry="6" fill="none" stroke="currentColor" strokeWidth="0.7"/>
         <text x="50" y="11" textAnchor="middle" fontSize="9" opacity="0.7">postgres</text>
       </g>
-      {/* connectors */}
-      {[0,1,2].map(i=>(
-        <line key={i} x1={80+i*120} y1={174} x2={200} y2={188} stroke="currentColor" strokeWidth="0.5" opacity="0.45"/>
-      ))}
     </g>
   </Frame>
 );
@@ -276,10 +269,6 @@ const OptAgentsFigure = () => (
       <path d="M 240 100 C 260 90, 280 70, 290 70" fill="none" stroke="var(--accent)" strokeWidth="0.8"/>
       <path d="M 290 170 C 260 170, 250 130, 240 120" fill="none" stroke="var(--accent)" strokeWidth="0.8"/>
       <path d="M 160 120 C 150 130, 140 170, 110 170" fill="none" stroke="var(--accent)" strokeWidth="0.8"/>
-      {/* center pulse */}
-      <circle cx="200" cy="110" r="3" fill="var(--accent)">
-        <animate attributeName="opacity" values="0.3;1;0.3" dur="1.4s" repeatCount="indefinite"/>
-      </circle>
     </g>
   </Frame>
 );
@@ -301,10 +290,6 @@ const OrMcpFigure = () => (
         <text x="50" y="22" textAnchor="middle" fontSize="9" opacity="0.6">MCP SERVER</text>
         <text x="50" y="42" textAnchor="middle" fontSize="11" fill="var(--accent)">or-mcp</text>
         <text x="50" y="60" textAnchor="middle" fontSize="9" opacity="0.65">tool router</text>
-        {/* mini tools */}
-        {[0,1,2].map(i=>(
-          <circle key={i} cx={20+i*15} cy="72" r="2" fill="var(--accent)" opacity={0.4 + i*0.2}/>
-        ))}
       </g>
       {/* OR tools right */}
       <g transform="translate(290,40)">
