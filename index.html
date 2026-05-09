@@ -35,10 +35,10 @@
     }/*EDITMODE-END*/;
 
     const ROUTES = [
-      { id: "home",     label: "Home" },
-      { id: "projects", label: "Open source" },
-      { id: "writing",  label: "Publications" },
-      { id: "contact",  label: "Contact" },
+      { id: "home",         label: "Home" },
+      { id: "open-source",  label: "Open source" },
+      { id: "publications", label: "Publications" },
+      { id: "contact",      label: "Contact" },
     ];
 
     function getRouteFromHash() {
@@ -98,10 +98,10 @@
 
       const renderRoute = () => {
         switch (route) {
-          case "projects": return <ProjectsPage data={data} />;
-          case "writing":  return <WritingPage data={data} />;
-          case "contact":  return <ContactPage data={data} />;
-          default:         return <Home data={data} go={go} />;
+          case "open-source":  return <ProjectsPage data={data} />;
+          case "publications": return <WritingPage data={data} />;
+          case "contact":      return <ContactPage data={data} />;
+          default:             return <Home data={data} go={go} />;
         }
       };
 

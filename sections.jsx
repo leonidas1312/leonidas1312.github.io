@@ -197,7 +197,7 @@ const ProjectsPage = ({ data }) => {
 
 // ── WRITING ──────────────────────────────────────────────────────────────
 const WritingPage = ({ data }) => (
-  <div className="page page-fit" data-screen-label="Writing">
+  <div className="page page-fit" data-screen-label="Publications">
     <header className="page-head compact">
       <h1 className="ph-title sm">Publications</h1>
     </header>
