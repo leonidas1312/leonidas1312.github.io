@@ -79,9 +79,20 @@
       }, []);
 
       const go = React.useCallback((id) => {
-        location.hash = "#/" + id;
+        if (id === "home") {
+          history.replaceState(null, "", location.pathname + location.search);
+        } else {
+          location.hash = "#/" + id;
+        }
         setRoute(id);
         window.scrollTo({ top: 0, behavior: "smooth" });
+      }, []);
+
+      // Clean up #/home in the URL on initial load
+      React.useEffect(() => {
+        if (location.hash === "#/home" || location.hash === "#home") {
+          history.replaceState(null, "", location.pathname + location.search);
+        }
       }, []);
 
       // Apply CSS variables from tweaks
