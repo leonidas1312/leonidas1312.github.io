@@ -97,7 +97,7 @@ const Home = ({ data, go }) => (
       <div className="hero-col">
         <div className="hero-prose hero-prose-rich">
           <div className="para para-name">
-            <p className="hero-name-lead">Ioannis D. Leonidas.</p>
+            <p className="hero-name-lead">Ioannis D. Leonidas</p>
           </div>
           <div className="para para-lead">
             <p className="hero-lead">

@@ -1484,6 +1484,11 @@ a.xp-org:hover { color: var(--accent); }
   scrollbar-width: none;
   padding-right: 8px;
   display: flex; flex-direction: column; gap: 28px;
+  width: 66.666%;
+  max-width: 66.666%;
+}
+@media (max-width: 1100px) {
+  .writing-scroll { width: 100%; max-width: 100%; }
 }
 .writing-section {
   background: var(--bg);
