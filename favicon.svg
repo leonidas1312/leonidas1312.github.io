@@ -1,4 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect width="64" height="64" rx="12" fill="#0d1117"/>
-  <text x="32" y="44" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="34" fill="#14b894" font-weight="600">|ψ⟩</text>
+  <rect width="64" height="64" rx="14" fill="#0E1116"/>
+  <g fill="none" stroke="#2DD4A4" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M11 17 L11 47"/>
+    <path d="M22 17 L22 32 Q22 38.5 28.5 38.5 L35.5 38.5 Q42 38.5 42 32 L42 17 M32 17 L32 51"/>
+    <path d="M50 17 L57 32 L50 47"/>
+  </g>
 </svg>
