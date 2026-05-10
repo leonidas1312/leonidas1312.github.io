@@ -1578,6 +1578,12 @@ a.xp-org:hover { color: var(--accent); }
   .ph-title.sm { font-size: clamp(22px, 2.2vw, 30px); }
 }
 
+/* Publications: keep titles in their original (sentence-case) form */
+.work-layout.compact.pubs .wi-name,
+.work-layout.compact.pubs .wd-name {
+  text-transform: none;
+}
+
 /* ── responsive ────────────────────────────────────────────────────── */
 @media (max-width: 1000px) {
   .work-layout { grid-template-columns: 1fr; }
@@ -1600,6 +1606,85 @@ a.xp-org:hover { color: var(--accent); }
   .repo-grid { grid-template-columns: 1fr; }
   .qbg-spectrum .blob, .qbg-aurora .ribbon { filter: blur(60px); }
   .app-footer { flex-direction: column; gap: 8px; align-items: start; }
+}
+
+/* ── phone (≤760px): allow page to scroll, stack the work layout ──── */
+@media (max-width: 760px) {
+  /* Release the locked-viewport shell so content can scroll naturally */
+  .app { height: auto; min-height: 100vh; }
+  .app > main.shell { overflow: visible; }
+  .page { padding: 18px 0 24px; }
+  .page-fit { overflow: visible; }
+
+  .shell { padding: 0 16px; }
+  .topbar { padding: 12px 16px; }
+
+  /* Stack project / publication layout into one column */
+  .work-layout.compact {
+    grid-template-columns: 1fr;
+    gap: 18px;
+    align-items: start;
+  }
+  .work-layout.compact .work-sidebar {
+    position: static;
+    overflow: visible;
+    gap: 14px;
+  }
+  .work-layout.compact .work-detail { overflow: visible; }
+  .work-layout.compact .wd-body {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto auto auto auto auto;
+    padding: 18px;
+    column-gap: 0;
+    row-gap: 10px;
+    overflow: visible;
+  }
+  .work-layout.compact .wd-name {
+    grid-column: 1; grid-row: 2;
+    font-size: clamp(22px, 5.6vw, 30px);
+  }
+  .work-layout.compact .wd-tag  { grid-column: 1; grid-row: 3; }
+  .work-layout.compact .wd-desc {
+    grid-column: 1; grid-row: 4;
+    overflow: visible;
+    max-height: none;
+  }
+  .work-layout.compact .wd-stack { grid-column: 1; grid-row: 5; }
+  .work-layout.compact .wd-link  { grid-column: 1; grid-row: 6; }
+  .work-layout.compact .wd-figure {
+    grid-column: 1; grid-row: 7;
+    height: auto;
+    min-height: 200px;
+  }
+  .wd-figure.compact .fig { height: auto; }
+
+  .work-layout.compact .wi-name { font-size: 14.5px; }
+  .pubs-sidebar { gap: 14px; }
+
+  /* Headings */
+  .ph-title.sm { font-size: clamp(28px, 7vw, 36px); }
+  .page-head.compact { margin-bottom: 14px; }
+
+  /* Hero */
+  .hero-grid { gap: 12px; }
+  .hero-col { padding: 12px 0 16px; height: auto; min-height: 0; overflow: visible; }
+  .hero-prose .hero-name-lead { font-size: clamp(28px, 8vw, 40px) !important; }
+  .hero-prose .hero-lead { font-size: clamp(20px, 5.5vw, 28px); }
+  .hero-prose .hero-sub { font-size: 14.5px; line-height: 1.55; }
+
+  /* Contact rows: smaller */
+  .contact-row { font-size: 13px; }
+  .cr-value { word-break: break-all; }
+
+  /* Footer compact */
+  .app-footer { padding: 12px 16px; font-size: 9px; gap: 4px; }
+  .fb-mid { display: none; }
+
+  /* Tweaks floating panel out of the way */
+  .twk-panel { display: none !important; }
+
+  /* Tone down decorative glyphs that clutter on small screens */
+  .para-glyph { display: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {

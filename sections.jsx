@@ -250,7 +250,7 @@ const WritingPage = ({ data }) => {
       <header className="page-head compact">
         <h1 className="ph-title sm">Publications</h1>
       </header>
-      <div className="work-layout compact no-filter">
+      <div className="work-layout compact no-filter pubs">
         <aside className="work-sidebar pubs-sidebar">
           <div className="work-group">
             <div className="work-group-title">Publications</div>
