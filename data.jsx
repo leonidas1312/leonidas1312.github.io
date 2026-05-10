@@ -87,6 +87,7 @@ const PORTFOLIO = {
 
   publications: [
     {
+      id: "vrptw-pub-2024",
       year: "2024",
       authors: "Leonidas, I.D. et al.",
       title:
@@ -101,6 +102,7 @@ const PORTFOLIO = {
 
   theses: [
     {
+      id: "msc-thesis-2023",
       year: "2023",
       kind: "MSc Thesis",
       title: "Qubit-Efficient Quantum Optimization in Routing & Scheduling.",
@@ -110,6 +112,7 @@ const PORTFOLIO = {
         "This thesis presents a novel approach for solving route and scheduling problems of the Quadratic Unconstrained Binary Optimization (QUBO) type using a novel quantum algorithm developed with collaborators at the Centre for Quantum Technologies in Singapore. The algorithm allows the mapping of classical binary variables to log2(N) + 1 qubits allowing for implementation of industrial level problems in near term quantum computers. We start the work by attacking a problem from the shipping industry known as the Vehicle Routing Problem with Time Windows (VRPTW), which we first cast in QUBO format. We then study how to adapt the qubit efficient algorithm to the problem at hand for different parameter regimes and constraints and design the relevant quantum circuits. We run the circuits on simulators first and pick the optimal ones to implement on real quantum computers on the cloud using superconducting and ion based qubits from provided by AWS (IONQ, Riggetti) and IBMQ. We demonstrate that is possible to solve problem instances of 128 and 3964 classical variables using only 8 and 13 qubits, well beyond capabilities of standard approaches based on the quantum approximate optimization algorithm (QAOA). We benchmark our results with the standard binary-to-qubit mappings used in QAOA and standard commercial solvers such as Gurobi find excellent agreement. Next, we introduce a novel reinforcement learning (RL) enhancement algorithm that can be used on top of our qubit efficient encoding to further enhance the quality of solutions obtained. In the final two chapters, we formulate as QUBO and then solve two more optimization problems from the aviation industry, namely the Tail Assignment Problem (TAP) and the Flight Gate Assignment (FGA) to test the effectiveness of the enhanced algorithm in tackling problems up to 25000 classical variables. Our simulator results show that using the enhanced RL pipeline one can find solutions belonging to the top 1% of the solution space.",
     },
     {
+      id: "diploma-thesis-2021",
       year: "2021",
       kind: "Diploma Thesis",
       title: "Quantum approximate optimization algorithms and applications.",

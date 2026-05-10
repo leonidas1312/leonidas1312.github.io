@@ -324,4 +324,262 @@ const ProjectFigure = ({ id }) => {
   return null;
 };
 
+// ── PUBLICATION FIGURES ────────────────────────────────────────────────
+// VRPTW · qubit-efficient encoding (2024 publication)
+const VrptwQubitFigure = () => {
+  const D = { x: 95, y: 110 };
+  const routes = [
+    { c: "#5b9bf2", nodes: [{x: 65, y: 50, l: "10"}, {x: 90, y: 38, l: "11"}, {x: 120, y: 55, l: "9"}] },
+    { c: "#48b46b", nodes: [{x: 38, y: 92, l: "2"},  {x: 50, y: 130, l: "4"}, {x: 30, y: 152, l: "3"}] },
+    { c: "#f29044", nodes: [{x: 122, y: 100, l: "5"}, {x: 138, y: 80, l: "6"}, {x: 152, y: 65, l: "7"}, {x: 138, y: 48, l: "8"}] },
+    { c: "#e8c84d", nodes: [{x: 65, y: 156, l: "14"}, {x: 95, y: 168, l: "12"}, {x: 130, y: 148, l: "13"}] },
+  ];
+
+  const rows = [
+    { txt: "{D,10,11,9,D}",  c: "#5b9bf2", n: 1, x: "x₀" },
+    { txt: "{D,2,4,3,D}",    c: "#48b46b", n: 2, x: "x₁" },
+    { txt: "{D,6,5,7,8,D}",  c: "#f29044", n: 3, x: "x₂" },
+    { txt: "{D,14,12,13,D}", c: "#e8c84d", n: 4, x: "x₃" },
+  ];
+
+  return (
+    <Frame label="VRPTW · QUBIT-EFFICIENT ENCODING">
+      <g fontFamily="var(--f-mono)" fill="currentColor">
+        {routes.map((r, i) => {
+          const pts = [D, ...r.nodes, D];
+          const d = pts.map((p, j) => `${j === 0 ? "M" : "L"} ${p.x} ${p.y}`).join(" ");
+          return <path key={`r${i}`} d={d} fill="none" stroke={r.c} strokeWidth="1.4" opacity="0.9"/>;
+        })}
+        {routes.map((r, i) => r.nodes.map((n, k) => (
+          <g key={`n${i}-${k}`}>
+            <circle cx={n.x} cy={n.y} r="6.5" fill="var(--bg)" stroke="currentColor" strokeWidth="0.7"/>
+            <text x={n.x} y={n.y + 2.4} textAnchor="middle" fontSize="6.5">{n.l}</text>
+          </g>
+        )))}
+        <circle cx={D.x} cy={D.y} r="6" fill="var(--accent)" stroke="var(--bg)" strokeWidth="1"/>
+        <text x={D.x + 11} y={D.y + 2.5} fontSize="8" opacity="0.9">Depot</text>
+
+        <line x1="195" y1="38" x2="195" y2="195" stroke="currentColor" strokeWidth="0.4" opacity="0.3" strokeDasharray="3 4"/>
+
+        <text x="215" y="46" fontSize="8.5" opacity="0.6">ROUTES → BINARY VARS</text>
+        {rows.map((r, i) => (
+          <g key={`row${i}`} transform={`translate(215, ${64 + i * 22})`}>
+            <text x="0" y="9" fontSize="7.5" opacity="0.85">{r.txt}</text>
+            <rect x="80" y="-2" width="50" height="14" fill={r.c} opacity="0.95" rx="1.5"/>
+            <text x="105" y="8" textAnchor="middle" fontSize="7.5" fill="#fff" fontWeight="600">Route {r.n}</text>
+            <line x1="134" y1="5" x2="152" y2="5" stroke="var(--accent)" strokeWidth="0.9" markerEnd="url(#vrp-ar)"/>
+            <text x="158" y="9" fontSize="9" fill="var(--accent)" fontWeight="500">{r.x}</text>
+          </g>
+        ))}
+
+        <text x="215" y="172" fontSize="8" opacity="0.85">Optimal: x = [1,1,1,1]ᵀ</text>
+        <text x="215" y="186" fontSize="7.5" opacity="0.55">x_i ∈ {`{0,1}`} · n qubits = log₂(N)+1</text>
+      </g>
+      <defs>
+        <marker id="vrp-ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+          <path d="M0 0 L 10 5 L 0 10 z" fill="var(--accent)"/>
+        </marker>
+      </defs>
+    </Frame>
+  );
+};
+
+// MSc thesis · QUBO + minimal encoding + RL enhancement (2023)
+const MscThesisFigure = () => (
+  <Frame label="QUBO · MINIMAL ENCODING · RL ENHANCEMENT">
+    <g fontFamily="var(--f-mono)" fill="currentColor">
+      {/* QUBO matrix */}
+      <g transform="translate(20, 46)">
+        <rect width="60" height="46" fill="none" stroke="currentColor" strokeWidth="0.7"/>
+        {Array.from({length: 5}).map((_, r) =>
+          Array.from({length: 6}).map((_, c) => (
+            <circle key={`m${r}-${c}`} cx={6 + c * 9.5} cy={6 + r * 8.5} r="1.6"
+              fill={(r + c) % 3 === 0 ? "var(--accent)" : "currentColor"}
+              opacity={(r+c)%3===0 ? 0.95 : 0.4}/>
+          ))
+        )}
+        <text x="30" y="58" textAnchor="middle" fontSize="7.5" opacity="0.6">QUBO matrix</text>
+      </g>
+
+      <line x1="84" y1="69" x2="112" y2="69" stroke="var(--accent)" strokeWidth="1" markerEnd="url(#msc-ar)"/>
+
+      {/* minimal encoding */}
+      <g transform="translate(115, 42)">
+        <rect width="105" height="58" fill="none" stroke="var(--accent)" strokeWidth="0.9"/>
+        <text x="52" y="13" textAnchor="middle" fontSize="7" opacity="0.6">MINIMAL ENCODING</text>
+        {["x₀|00⟩", "x₁|01⟩", "x₂|10⟩", "x₃|11⟩"].map((t, i) => (
+          <text key={i} x={6 + i * 25} y="32" fontSize="7" fill="var(--accent)">{t}</text>
+        ))}
+        <text x="52" y="48" textAnchor="middle" fontSize="7" opacity="0.7">3 qubits · n_c = 4</text>
+      </g>
+
+      <line x1="223" y1="69" x2="248" y2="69" stroke="var(--accent)" strokeWidth="1" markerEnd="url(#msc-ar)"/>
+
+      {/* QPU circuit */}
+      <g transform="translate(252, 42)">
+        <rect width="78" height="58" fill="none" stroke="currentColor" strokeWidth="0.7"/>
+        <text x="39" y="13" textAnchor="middle" fontSize="7" opacity="0.6">CPU / QPU</text>
+        {[0, 1, 2, 3].map(r => (
+          <line key={r} x1="6" y1={22 + r * 7} x2="72" y2={22 + r * 7}
+            stroke="currentColor" strokeWidth="0.4" opacity="0.45"/>
+        ))}
+        {[10, 24, 38, 52].map((x, i) => (
+          <rect key={`g1${i}`} x={x} y={18 + (i % 2) * 7} width="6" height="6"
+            fill="var(--accent)" opacity="0.85"/>
+        ))}
+        <rect x="60" y="18" width="6" height="13" fill="var(--accent)" opacity="0.55"/>
+        <text x="39" y="52" textAnchor="middle" fontSize="6.5" opacity="0.65">θ → C_me(θ)</text>
+      </g>
+
+      {/* ADAM */}
+      <g transform="translate(335, 42)">
+        <rect width="50" height="58" fill="none" stroke="currentColor" strokeWidth="0.7"/>
+        <text x="25" y="14" textAnchor="middle" fontSize="6.5" opacity="0.65">ADAM</text>
+        <text x="25" y="32" textAnchor="middle" fontSize="9" fill="var(--accent)">min</text>
+        <text x="25" y="46" textAnchor="middle" fontSize="6.5" opacity="0.55">C_me(θ)</text>
+      </g>
+
+      {/* updating feedback arrow */}
+      <path d="M 360 100 C 360 116, 200 116, 200 102" fill="none" stroke="currentColor"
+        strokeWidth="0.5" strokeDasharray="2 3" opacity="0.55"/>
+
+      {/* RL bottom row header */}
+      <g transform="translate(20, 122)">
+        <text fontSize="7" opacity="0.65">GPU-ENHANCED RL SEARCH</text>
+        <line x1="0" y1="6" x2="365" y2="6" stroke="currentColor" strokeWidth="0.4" opacity="0.3"/>
+      </g>
+
+      {/* Exploration */}
+      <g transform="translate(20, 138)">
+        <rect width="100" height="56" fill="none" stroke="currentColor" strokeWidth="0.6"/>
+        <text x="50" y="13" textAnchor="middle" fontSize="6.5" opacity="0.6">EXPLORATION</text>
+        {[0.40, 0.72, 0.50, 0.92, 0.32, 0.62].map((h, i) => (
+          <rect key={i} x={10 + i * 14} y={48 - h * 26} width="10" height={h * 26}
+            fill="var(--accent)" opacity="0.7"/>
+        ))}
+        <text x="50" y="54" textAnchor="middle" fontSize="6" opacity="0.55">softmax(R) → sample</text>
+      </g>
+
+      {/* Exploitation */}
+      <g transform="translate(135, 138)">
+        <rect width="100" height="56" fill="none" stroke="currentColor" strokeWidth="0.6"/>
+        <text x="50" y="13" textAnchor="middle" fontSize="6.5" opacity="0.6">EXPLOITATION</text>
+        {[0.55, 0.46, 0.86, 0.40, 0.65, 0.52].map((h, i) => (
+          <rect key={i} x={10 + i * 14} y={48 - h * 26} width="10" height={h * 26}
+            fill={i === 2 ? "var(--accent)" : "currentColor"}
+            opacity={i === 2 ? 0.95 : 0.4}/>
+        ))}
+        <text x="50" y="54" textAnchor="middle" fontSize="6" opacity="0.55">argmax UCB</text>
+      </g>
+
+      {/* Reward / leaderboard */}
+      <g transform="translate(250, 138)">
+        <rect width="135" height="56" fill="none" stroke="currentColor" strokeWidth="0.6"/>
+        <text x="68" y="13" textAnchor="middle" fontSize="6.5" opacity="0.6">REWARD · LEADERBOARD</text>
+        <path d="M 8 46 C 30 42, 50 30, 75 24 S 115 18, 128 17"
+          fill="none" stroke="var(--accent)" strokeWidth="1.3"/>
+        <line x1="8" y1="32" x2="128" y2="32" stroke="currentColor" strokeWidth="0.3"
+          strokeDasharray="2 2" opacity="0.4"/>
+        <text x="124" y="30" textAnchor="end" fontSize="5.5" opacity="0.55">99th pct</text>
+        <text x="68" y="54" textAnchor="middle" fontSize="6" opacity="0.55">cost C ↓ over time</text>
+      </g>
+
+      <defs>
+        <marker id="msc-ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+          <path d="M0 0 L 10 5 L 0 10 z" fill="var(--accent)"/>
+        </marker>
+      </defs>
+    </g>
+  </Frame>
+);
+
+// Diploma thesis · QAOA / Gibbs objective convergence (2021)
+const DiplomaThesisFigure = () => {
+  const X0 = 56, Y0 = 38, W = 290, H = 132;
+  const xMax = 7, yMax = 2.7;
+  const sx = (p) => X0 + ((p - 1) / (xMax - 1)) * W;
+  const sy = (v) => Y0 + H - (v / yMax) * H;
+
+  const curves = [
+    { eta: "η=500",  c: "#3a3a3a", pts: [2.55, 1.10, 0.66, 0.36, 0.20, 0.10, 0.05] },
+    { eta: "η=250",  c: "#d4b73a", pts: [2.50, 1.08, 0.60, 0.34, 0.19, 0.09, 0.045] },
+    { eta: "η=100",  c: "#9e4ec9", pts: [2.50, 1.06, 0.58, 0.34, 0.19, 0.09, 0.04] },
+    { eta: "η=50",   c: "#22cdd1", pts: [2.50, 1.06, 0.58, 0.34, 0.19, 0.09, 0.04] },
+    { eta: "η=1",    c: "#3fb364", pts: [2.50, 1.04, 0.58, 0.32, 0.18, 0.08, 0.03] },
+    { eta: "η=0.1",  c: "#e64545", pts: [1.95, 0.90, 0.50, 0.30, 0.16, 0.08, 0.03] },
+    { eta: "η=0.01", c: "#3da6ff", pts: [0.42, 0.18, 0.13, 0.10, 0.07, 0.04, 0.02] },
+  ];
+
+  return (
+    <Frame label="QAOA · GIBBS OBJECTIVE FUNCTION f(η)">
+      <g fontFamily="var(--f-mono)" fill="currentColor">
+        {/* gridlines */}
+        {[0, 0.5, 1.0, 1.5, 2.0, 2.5].map((t, i) => (
+          <line key={`yg${i}`} x1={X0} y1={sy(t)} x2={X0+W} y2={sy(t)}
+            stroke="currentColor" strokeWidth="0.3" opacity="0.2"/>
+        ))}
+        {[1,2,3,4,5,6,7].map((t, i) => (
+          <line key={`xg${i}`} x1={sx(t)} y1={Y0} x2={sx(t)} y2={Y0+H}
+            stroke="currentColor" strokeWidth="0.3" opacity="0.12"/>
+        ))}
+
+        {/* axes */}
+        <line x1={X0} y1={Y0} x2={X0} y2={Y0+H} stroke="currentColor" strokeWidth="0.7" opacity="0.65"/>
+        <line x1={X0} y1={Y0+H} x2={X0+W} y2={Y0+H} stroke="currentColor" strokeWidth="0.7" opacity="0.65"/>
+
+        {/* y ticks */}
+        {[0, 0.5, 1.0, 1.5, 2.0, 2.5].map((t, i) => (
+          <text key={`yt${i}`} x={X0 - 5} y={sy(t) + 3} textAnchor="end" fontSize="7" opacity="0.65">{t.toFixed(1)}</text>
+        ))}
+        {[1,2,3,4,5,6,7].map((t, i) => (
+          <text key={`xt${i}`} x={sx(t)} y={Y0+H+11} textAnchor="middle" fontSize="7" opacity="0.65">{t}</text>
+        ))}
+
+        {/* axis labels */}
+        <text x="14" y={Y0+H/2} textAnchor="middle"
+          transform={`rotate(-90, 14, ${Y0+H/2})`}
+          fontSize="7.5" opacity="0.75">Gibbs objective f(η)</text>
+        <text x={X0+W/2} y={Y0+H+22} textAnchor="middle" fontSize="7.5" opacity="0.75">QAOA depth p</text>
+
+        {/* curves */}
+        {curves.map((c, ci) => {
+          const d = c.pts.map((v, i) => `${i === 0 ? "M" : "L"} ${sx(i+1)} ${sy(v)}`).join(" ");
+          return (
+            <g key={`c${ci}`}>
+              <path d={d} fill="none" stroke={c.c} strokeWidth="1.05"
+                strokeDasharray="3 2.5" opacity="0.9"/>
+              {c.pts.map((v, i) => (
+                <polygon key={i}
+                  points={`${sx(i+1)},${sy(v) - 3.2} ${sx(i+1) - 2.7},${sy(v) + 1.8} ${sx(i+1) + 2.7},${sy(v) + 1.8}`}
+                  fill={c.c} opacity="0.95"/>
+              ))}
+            </g>
+          );
+        })}
+
+        {/* legend */}
+        <g transform={`translate(${X0+W-72}, ${Y0+6})`}>
+          <rect x="-4" y="-4" width="76" height={curves.length * 11 + 6}
+            fill="var(--bg)" stroke="currentColor" strokeWidth="0.4" opacity="0.85"/>
+          {curves.map((c, i) => (
+            <g key={`l${i}`} transform={`translate(0, ${i * 11})`}>
+              <line x1="0" y1="3" x2="14" y2="3" stroke={c.c} strokeWidth="1.1" strokeDasharray="3 2.5"/>
+              <polygon points="7,1 5,5 9,5" fill={c.c}/>
+              <text x="20" y="5.5" fontSize="6.5" opacity="0.9">{c.eta}</text>
+            </g>
+          ))}
+        </g>
+      </g>
+    </Frame>
+  );
+};
+
+const PublicationFigure = ({ id }) => {
+  if (id === "vrptw-pub-2024") return <VrptwQubitFigure/>;
+  if (id === "msc-thesis-2023") return <MscThesisFigure/>;
+  if (id === "diploma-thesis-2021") return <DiplomaThesisFigure/>;
+  return null;
+};
+
 window.ProjectFigure = ProjectFigure;
+window.PublicationFigure = PublicationFigure;

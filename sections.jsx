@@ -196,75 +196,109 @@ const ProjectsPage = ({ data }) => {
 };
 
 // ── WRITING ──────────────────────────────────────────────────────────────
-const WritingPage = ({ data }) => (
-  <div className="page page-fit" data-screen-label="Publications">
-    <header className="page-head compact">
-      <h1 className="ph-title sm">Publications</h1>
-    </header>
-    <div className="writing-scroll">
-      <section className="writing-section">
-        <h3 className="sub-title">Publications</h3>
-        <ul className="pub-list">
-          {data.publications.map((p, i) => (
-            <li key={i} className="pub">
-              <div className="pub-year">{p.year}</div>
-              <div className="pub-body">
-                <div className="pub-authors">{p.authors}</div>
-                <a className="pub-title" href={p.url} target="_blank" rel="noreferrer">
-                  {p.title} <span className="ext">↗</span>
-                </a>
-                <div className="pub-venue"><em>{p.venue}</em> · doi:{p.doi}</div>
-                {p.abstract && (
-                  <Expandable label="Abstract">
-                    <p>{p.abstract}</p>
-                  </Expandable>
-                )}
-              </div>
-            </li>
-          ))}
-        </ul>
-      </section>
+const WritingPage = ({ data }) => {
+  const items = [
+    ...data.publications.map(p => ({
+      id: p.id,
+      kind: "Publication",
+      year: p.year,
+      title: p.title,
+      tag: p.venue,
+      authors: p.authors,
+      meta: `doi:${p.doi}`,
+      abstract: p.abstract,
+      linkLabel: `doi.org/${p.doi}`,
+      url: p.url,
+      group: "publications",
+    })),
+    ...data.theses.map(t => ({
+      id: t.id,
+      kind: t.kind,
+      year: t.year,
+      title: t.title,
+      tag: t.org,
+      authors: null,
+      meta: null,
+      abstract: t.abstract,
+      linkLabel: "Read at TUC library",
+      url: t.url,
+      group: "theses",
+    })),
+  ];
+  const [active, setActive] = React.useState(items[0].id);
+  const sel = items.find(i => i.id === active) || items[0];
+  const pubs = items.filter(i => i.group === "publications");
+  const theses = items.filter(i => i.group === "theses");
 
-      <section className="writing-section">
-        <h3 className="sub-title">Theses</h3>
-        <ul className="pub-list">
-          {data.theses.map((t, i) => (
-            <li key={i} className="pub">
-              <div className="pub-year">{t.year}</div>
-              <div className="pub-body">
-                <div className="pub-authors">{t.kind}</div>
-                <a className="pub-title" href={t.url} target="_blank" rel="noreferrer">
-                  {t.title} <span className="ext">↗</span>
-                </a>
-                <div className="pub-venue"><em>{t.org}</em></div>
-                {t.abstract && (
-                  <Expandable label="Abstract">
-                    <p>{t.abstract}</p>
-                  </Expandable>
-                )}
-              </div>
-            </li>
-          ))}
-        </ul>
-      </section>
+  const SidebarList = ({ rows }) => (
+    <ul className="work-list">
+      {rows.map(it => (
+        <li key={it.id}>
+          <button
+            className={`work-item ${active === it.id ? "active" : ""}`}
+            onClick={() => setActive(it.id)}>
+            <span className="wi-year">{it.year}</span>
+            <span className="wi-name">{it.title}</span>
+          </button>
+        </li>
+      ))}
+    </ul>
+  );
 
-      <section className="writing-section">
-        <h3 className="sub-title">Distinctions</h3>
-        <ul className="link-list">
-          {data.links.map((l, i) => (
-            <li key={i}>
-              <a href={l.url} target="_blank" rel="noreferrer" className="link-row">
-                <span className="lr-arrow">↗</span>
-                <span>{l.label}</span>
-                <span className="lr-host">{new URL(l.url).hostname.replace("www.","")}</span>
-              </a>
-            </li>
-          ))}
-        </ul>
-      </section>
+  return (
+    <div className="page page-fit" data-screen-label="Publications">
+      <header className="page-head compact">
+        <h1 className="ph-title sm">Publications</h1>
+      </header>
+      <div className="work-layout compact no-filter">
+        <aside className="work-sidebar pubs-sidebar">
+          <div className="work-group">
+            <div className="work-group-title">Publications</div>
+            <SidebarList rows={pubs} />
+          </div>
+          <div className="work-group">
+            <div className="work-group-title">Theses</div>
+            <SidebarList rows={theses} />
+          </div>
+          <div className="work-group dist-group">
+            <div className="work-group-title">Distinctions</div>
+            <ul className="link-list">
+              {data.links.map((l, i) => (
+                <li key={i}>
+                  <a href={l.url} target="_blank" rel="noreferrer" className="link-row">
+                    <span className="lr-arrow">↗</span>
+                    <span>{l.label}</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </aside>
+
+        <article className="work-detail">
+          <div className="wd-body">
+            <div className="wd-top">
+              <span className="wd-kind">{sel.kind}</span>
+              {sel.meta && <span>{sel.meta}</span>}
+            </div>
+            <h2 className="wd-name">{sel.title}</h2>
+            <p className="wd-tag">
+              {sel.authors && <span className="wd-authors-inline">{sel.authors} · </span>}
+              {sel.tag}
+            </p>
+            <p className="wd-desc">{sel.abstract}</p>
+            <a className="wd-link" href={sel.url} target="_blank" rel="noreferrer">
+              <span>↗</span><span>{sel.linkLabel}</span>
+            </a>
+            <div className="wd-figure compact">
+              <PublicationFigure id={sel.id} />
+            </div>
+          </div>
+        </article>
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 // ── CONTACT ──────────────────────────────────────────────────────────────
 const ContactPage = ({ data }) => {
